@@ -18,5 +18,9 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    return view('laravel-test');
+    return json_encode(
+        [
+            "hi" => "hello",
+        ]
+    );
 });
