@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HttpController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,13 +29,18 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::get('/products', 'ProductController@index');
-Route::get('/products/{id}', 'ProductController@show');
+Route::get('/products', [ProductController::class, 'index']);
 
-Route::resource('products', 'ProductController');
+Route::get('/products/{id}/edit', [ProductController::class,'edit']);
 
-Route::get('/products', 'ProductController@index')->name('products.index');
+Route::get('/products/{id}/delete', [ProductController::class,'delete']);
 
-Route::get('/users/{id}', function ($id) {
-    return 'User ' . $id;
-})->where('id', '[0-9]+');
+Route::get('/products/create', [ProductController::class,'create']);
+
+Route::get('/products/store', [ProductController::class,'store']);
+
+Route::get('/products/update', [ProductController::class,'update']);
+
+Route::get('/products/destroy', [ProductController::class,'destroy']);
+
+Route::get('products/sendmail', [ProductController::class,'sendEmail']);
