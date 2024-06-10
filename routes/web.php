@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HttpController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,5 @@ Route::get('/products/update', [ProductController::class,'update']);
 Route::get('/products/destroy', [ProductController::class,'destroy']);
 
 Route::get('products/sendmail', [ProductController::class,'sendEmail']);
+
+Route::get('password/hash', [PasswordController::class,'hashPassword']);

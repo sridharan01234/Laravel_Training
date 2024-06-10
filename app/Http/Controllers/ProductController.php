@@ -53,6 +53,5 @@ class ProductController extends Controller
         Mail::to($to)->send($email);
 
         return redirect()->back()->with('success', 'Email sent successfully.');
-
     }
 }
