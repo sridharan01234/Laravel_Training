@@ -18,12 +18,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return json_encode(
-        [
-            "hi" => "hello",
-        ]
-    );
+Route::get('/about', function () {
+    return 'About Us Page';
 });
 
-Route::get('/user', [HttpController::class, 'index']);
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', function () {
+        return 'User Profile';
+    });
+});
+
+Route::get('/products', 'ProductController@index');
+Route::get('/products/{id}', 'ProductController@show');
+
+Route::resource('products', 'ProductController');
+
+Route::get('/products', 'ProductController@index')->name('products.index');
+
+Route::get('/users/{id}', function ($id) {
+    return 'User ' . $id;
+})->where('id', '[0-9]+');
