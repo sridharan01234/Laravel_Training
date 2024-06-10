@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail as SendEmail;
 
 class ProductController extends Controller
 {
     public function index()
     {
         return 'Hello from ProductController index method';
-    }
-
-    public function show($id)
-    {
-        return "Hello from ProductController show method for product $id";  
     }
 
     public function create()
@@ -41,5 +38,21 @@ class ProductController extends Controller
         return "Hello from ProductController destroy method for product $id";
     }
 
-    
+    public function sendEmail(Request $request)
+    {
+        $request->validate([
+            'to' => 'required|email',
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
+        $to = $request->input('to');
+        $subject = $request->input('subject');
+        $message = $request->input('message');
+        $email = new SendEmail($to, $subject, $message);
+
+        Mail::to($to)->send($email);
+
+        return redirect()->back()->with('success', 'Email sent successfully.');
+
+    }
 }
