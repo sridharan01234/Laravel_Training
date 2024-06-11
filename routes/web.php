@@ -35,25 +35,16 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::get('user/login', [UserController::class,'login']);
+
+Route::get('user/profile', [UserController::class, 'profile']);
+
 Route::get('/user/{id}', function ($id) {
     return view('user', ['id' => $id]);
 });
 
-
-Route::get('products/sendmail', [ProductController::class,'sendEmail']);
-
-Route::get('/products', [ProductController::class, 'index']);
-
-Route::get('/products/{id}/edit', [ProductController::class,'edit']);
-
-Route::get('/products/{id}/delete', [ProductController::class,'delete']);
-
-Route::get('/products/create', [ProductController::class,'create']);
-
-Route::get('/products/store', [ProductController::class,'store']);
-
-Route::get('/products/update', [ProductController::class,'update']);
-
-Route::get('/products/destroy', [ProductController::class,'destroy']);
-
-Route::get('password/hash', [PasswordController::class,'hashPassword']);
+Route::get('hello', function () {
+    return response()
+            ->view('hello', [], 200)
+            ->header('Content-Type', 'view');
+});

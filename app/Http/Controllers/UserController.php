@@ -15,4 +15,26 @@ class UserController extends Authenticatable implements MustVerifyEmail
     {
         return view('user.show');
     }
+
+    /**
+     * Show the profile for the given user.
+     */
+    public function profile(Request $request)
+    { 
+        session()->put('id', 34);
+        $value = session()->get('id');
+        return view('user.profile', ['user' => $value]);
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+            $user = $request->only('email','password');
+            $user['password'] = bcrypt($request->password);
+
+            return $user;
+    }
 }
