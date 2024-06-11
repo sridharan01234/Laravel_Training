@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HttpController;
 use App\Http\Controllers\ProductController;
@@ -24,11 +25,22 @@ Route::get('/about', function () {
     return 'About Us Page';
 });
 
+Route::get('/laravel/test', function () {
+    return view('test');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', function () {
         return 'User Profile';
     });
 });
+
+Route::get('/user/{id}', function ($id) {
+    return view('user', ['id' => $id]);
+});
+
+
+Route::get('products/sendmail', [ProductController::class,'sendEmail']);
 
 Route::get('/products', [ProductController::class, 'index']);
 
@@ -43,7 +55,5 @@ Route::get('/products/store', [ProductController::class,'store']);
 Route::get('/products/update', [ProductController::class,'update']);
 
 Route::get('/products/destroy', [ProductController::class,'destroy']);
-
-Route::get('products/sendmail', [ProductController::class,'sendEmail']);
 
 Route::get('password/hash', [PasswordController::class,'hashPassword']);
