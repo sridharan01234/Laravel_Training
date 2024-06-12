@@ -20,7 +20,7 @@ class UserController extends Authenticatable implements MustVerifyEmail
      * Show the profile for the given user.
      */
     public function profile(Request $request)
-    { 
+    {
         session()->put('id', 34);
         $value = session()->get('id');
         return view('user.profile', ['user' => $value]);
@@ -32,9 +32,9 @@ class UserController extends Authenticatable implements MustVerifyEmail
             'email' => 'required|email',
             'password' => 'required'
         ]);
-            $user = $request->only('email','password');
-            $user['password'] = bcrypt($request->password);
+        $user = $request->only('email', 'password');
+        $user['password'] = bcrypt($request->password);
 
-            return $user;
+        return $user;
     }
 }
