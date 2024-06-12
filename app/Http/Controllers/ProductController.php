@@ -48,10 +48,15 @@ class ProductController extends Controller
         $to = $request->input('to');
         $subject = $request->input('subject');
         $message = $request->input('message');
-        $email = new SendEmail($to, $subject, $message);
 
-        Mail::to($to)->send($email);
+        try {
+            $email = new SendEmail($to, $subject, $message);
+            Mail::to($to)->send($email);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+        }
 
-        return redirect()->back()->with('success', 'Email sent successfully.');
+
+                return redirect()->back()->with('success', 'Email sent successfully.');
     }
 }
