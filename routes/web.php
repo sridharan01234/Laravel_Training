@@ -43,8 +43,12 @@ Route::get('/user/{id}', function ($id) {
     return view('user', ['id' => $id]);
 });
 
-Route::get('hello', function () {
+Route::get('/hello', function () {
     return response()
             ->view('hello', [], 200)
             ->header('Content-Type', 'view');
 });
+
+Route::get('/dbconnection', [UserController::class,'GetDbConnection']);
+
+Route::post('/csrf', [UserController::class,'CSRFProtection']);
