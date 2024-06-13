@@ -11,6 +11,13 @@ class UserController extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
+    public function index()
+    {
+        $users = User::paginate(10);
+
+        return view('users.index', compact('users'));
+    }
+    
     public function show()
     {
         return view('user.show');
