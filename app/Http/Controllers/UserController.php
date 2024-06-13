@@ -47,4 +47,60 @@ class UserController extends Authenticatable implements MustVerifyEmail
     {
         return view('user.csrfform');
     }
+
+    public function getAllUsers()
+    {
+        $users = DB::table('users')->get();
+        return response()->json($users); // Return as JSON
+    }
+
+    public function getUserById($id)
+    {
+        $user = DB::table('users')->where('id', $id)->first();
+        return response()->json($user);
+    }
+
+    public function createUser(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+        ]);
+
+        $data['password'] = bcrypt($data['password']); // Hash the password
+
+        DB::table('users')->insert($data);
+
+        return response()->json(['message' => 'User created successfully']);
+    }
+
+    public function updateUser($id, Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'sometimes|required',
+            'email' => 'sometimes|required|email|unique:users,email,' . $id, // Ensure email is unique except for the current user
+            'password' => 'sometimes|required',
+        ]);
+
+        if (isset($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        }
+
+        DB::table('users')->where('id', $id)->update($data);
+
+        return response()->json(['message' => 'User updated successfully']);
+    }
+
+    public function deleteUser($id)
+    {
+        DB::table('users')->where('id', $id)->delete();
+        return response()->json(['message' => 'User deleted successfully']);
+    }
+
+    public function countUsers()
+    {
+        $count = DB::table('users')->count();
+        return response()->json(['count' => $count]);
+    }
 }

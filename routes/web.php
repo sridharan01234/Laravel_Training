@@ -52,3 +52,10 @@ Route::get('/hello', function () {
 Route::get('/dbconnection', [UserController::class,'GetDbConnection']);
 
 Route::post('/csrf', [UserController::class,'CSRFProtection']);
+
+Route::get('/users', [UserController::class, 'getAllUsers']);
+Route::get('/users/{id}', [UserController::class, 'getUserById']);
+Route::post('/users', [UserController::class, 'createUser']);
+Route::put('/users/{id}', [UserController::class, 'updateUser']);
+Route::delete('/users/{id}', [UserController::class, 'deleteUser']);
+Route::get('/users/count', [UserController::class, 'countUsers']);
