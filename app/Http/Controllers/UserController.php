@@ -37,4 +37,14 @@ class UserController extends Authenticatable implements MustVerifyEmail
 
         return $user;
     }
+
+    public function GetDbConnection()
+    {
+        return view('user.dbConnection');
+    }
+
+    public function CSRFProtection()
+    {
+        return view('user.csrfform');
+    }
 }
