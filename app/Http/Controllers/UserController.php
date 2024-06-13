@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Redis;
 
 class UserController extends Authenticatable implements MustVerifyEmail
 {
@@ -17,10 +18,12 @@ class UserController extends Authenticatable implements MustVerifyEmail
 
         return view('users.index', compact('users'));
     }
-    
+
     public function show()
     {
-        return view('user.show');
+        Redis::set('key', 'value');
+        $value = Redis::get('key');
+        return view('user.show', ['user' => $value]);
     }
 
     /**
